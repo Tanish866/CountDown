@@ -1,16 +1,35 @@
-# React + Vite
+#  CountDown Timer App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This app is a simple React-based countdown timer. It calculates the remaining time between the current moment and a user-selected target date/time, then breaks that difference down into **days, hours, minutes, and seconds**.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+##  Core Logic
 
-## React Compiler
+The app works by:
+1. Storing the target date/time selected by the user.
+2. Using `setInterval` to update the difference (`diff`) between the target and the current time every second.
+3. Breaking down `diff` (in milliseconds) into days, hours, minutes, and seconds using mathematical formulas.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+##  Formulas
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Let:
+- `diff` = `new Date(target) - new Date()` (milliseconds remaining)
+
+### Days
+```js
+days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+### Hours
+
+hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+
+### Minutes
+
+minutes = Math.floor((diff / (1000 * 60)) % 60);
+
+### Seconds
+
+seconds = Math.floor((diff / 1000) % 60);
